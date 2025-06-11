@@ -7,36 +7,27 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-         //load driver
-       try{
-           // Class.forName("com.mysql.jdbc.Driver");
-
-           //establish connection
-           String url ="jdbc:mysql://localhost:3307/test";
-           String username = "root";
-           String password = "";
-           Connection conn = DriverManager.getConnection(url,username,password);
-
-           //make statement
-           Statement st = conn.createStatement();
-
-
-           //execute statement
-           ResultSet rs = st.executeQuery("SELECT name FROM student WHERE district='kathmandu'");
-           while(rs.next()){
-               String name = rs.getString("name");
-               System.out.println("Name: "+name);
-           }
-           st.close();
-           conn.close();
-
-       } catch(SQLException sqlExcept){
-           System.out.println("Error:"+sqlExcept.getMessage());
-       }
-
-
-
-
-
+        //load the driver
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }catch(ClassNotFoundException ce)
+        {
+            System.out.print(ce.getMessage());
+        }
+        //create the connection
+        try{
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/test","root","");
+            Statement st = con.createStatement();
+            String query = "SELECT * FROM student";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                String name = rs.getString("name");
+                String district = rs.getString("district");
+                System.out.println("name: "+ name + " district: "+ district);
+            }
+        }catch(SQLException ex)
+        {
+            System.out.print(ex.getMessage());
+        }
     }
 }

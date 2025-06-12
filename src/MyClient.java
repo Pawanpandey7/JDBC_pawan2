@@ -10,8 +10,6 @@ public class MyClient {
             dos.flush();
             dos.close();
             s.close();
-
-
         }catch(IOException ex)
         {
             System.out.print(ex.getMessage());
